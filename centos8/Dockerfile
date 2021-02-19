@@ -16,6 +16,7 @@ RUN yum install \
   vim \
   sudo \
   svn \
+  python3-pip \
   unzip -y && yum clean all
 
 WORKDIR /
@@ -30,6 +31,8 @@ RUN echo "ALL ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/enable-all
 RUN  mkdir /etc/php-extensions-available; \
   mv /etc/php.d/15-xdebug.ini /etc/php-extensions-available; \
   chown www-data -R /etc/php*
+
+RUN pip3 install python-gitlab
 
 COPY entrypoint-dev.sh /
 COPY bash.sh /
