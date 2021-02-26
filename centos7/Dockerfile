@@ -18,6 +18,13 @@ RUN export VERSION=$(echo $PHP_VERSION | sed -E 's/([0-9]).([0-9])/\1\2/g') && \
   iproute \
   svn \
   python3-pip \
+  zsh \
+  glances \
+  the_silver_searcher \
+  tmux \
+  screen \
+  jq \
+  parallel \
   unzip -y && yum clean all
 
 WORKDIR /
@@ -33,7 +40,11 @@ RUN  mkdir /etc/php-extensions-available; \
   mv /etc/php.d/15-xdebug.ini /etc/php-extensions-available; \
   chown www-data -R /etc/php*
 
-RUN pip3 install python-gitlab
+RUN \
+  pip3 install \
+    python-gitlab \
+    mitzasql \
+    ranger-fm
 
 COPY entrypoint-dev.sh /
 COPY bash.sh /
@@ -44,6 +55,10 @@ RUN echo "opcache.validate_timestamps=1" >> /etc/php.d/docker-opcache.ini
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 USER www-data
+RUN \
+  touch ~/.zshrc; \
+  mkdir ~/.parallel; \
+  touch ~/.parallel/will-cite
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash && \
   source ~/.bashrc && \
   nvm install --lts
