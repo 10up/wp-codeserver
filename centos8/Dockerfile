@@ -46,8 +46,10 @@ RUN \
     ranger-fm
 
 COPY entrypoint-dev.sh /
+COPY code-server-entrypoint.sh /
 COPY bash.sh /
 RUN chmod +x /entrypoint-dev.sh && \
+    chmod +x /code-server-entrypoint.sh && \
     chmod +x /bash.sh
 
 RUN echo "opcache.validate_timestamps=1" >> /etc/php.d/docker-opcache.ini
@@ -63,5 +65,4 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | b
   nvm install --lts
 WORKDIR /var/www/html
 
-ENTRYPOINT []
-CMD ["code-server", "--bind-addr", "0.0.0.0:8080"]
+ENTRYPOINT ["/code-server-entrypoint.sh"]
