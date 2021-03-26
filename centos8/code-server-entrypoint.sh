@@ -3,7 +3,7 @@
 if [ -d /code-server-entrypoint.d ]; then
   for I in $(ls /code-server-entrypoint.d)
   do
-    . /code-server/entrypoint.d/$I
+    . /code-server-entrypoint.d/$I
   done
 fi
 
