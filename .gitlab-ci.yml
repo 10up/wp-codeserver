@@ -4,7 +4,7 @@ include:
     file: /main.yml
 
 build:
-  extends: .kubernetes_build_docker_image:
+  extends: .kubernetes_build_docker_image
   tags:
     - kubernetes
   script:
