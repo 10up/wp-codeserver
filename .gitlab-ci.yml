@@ -3,7 +3,7 @@ include:
     ref: trunk
     file: /main.yml
 
-build:
+.build:
   extends: .kubernetes_build_docker_image
   tags:
     - kubernetes
@@ -14,45 +14,48 @@ build:
     - docker build --pull --network host --build-arg PHP_VERSION=$PHP_VERSION --tag $CI_REGISTRY_IMAGE:${DOCKER_TAG} --tag $CI_REGISTRY_IMAGE:${DOCKER_TAG}-${CI_COMMIT_SHORT_SHA}  .
     - docker push $CI_REGISTRY_IMAGE:${DOCKER_TAG}
     - docker push $CI_REGISTRY_IMAGE:${DOCKER_TAG}-${CI_COMMIT_SHORT_SHA}
+  when: on_success
+  only:
+    - master
 
 PHP 5.6:
   variables:
     PHP_VERSION: '5.6'
     BASE: 'centos7'
-  extends: .common
+  extends: .build
 
 PHP 7.0:
   variables:
     PHP_VERSION: '7.0'
     BASE: 'centos7'
-  extends: .common
+  extends: .build
 
 PHP 7.1:
   variables:
     PHP_VERSION: '7.1'
     BASE: 'centos7'
-  extends: .common
+  extends: .build
 
 PHP 7.2:
   variables:
     PHP_VERSION: '7.2'
     BASE: 'centos8'
-  extends: .common
+  extends: .build
 
 PHP 7.3:
   variables:
     PHP_VERSION: '7.3'
     BASE: 'centos8'
-  extends: .common
+  extends: .build
 
 PHP 7.4:
   variables:
     PHP_VERSION: '7.4'
     BASE: 'centos8'
-  extends: .common
+  extends: .build
 
 PHP 8.0:
   variables:
     PHP_VERSION: '8.0'
     BASE: 'centos8'
-  extends: .common
+  extends: .build
