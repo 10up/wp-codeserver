@@ -24,6 +24,7 @@ RUN yum install \
   screen \
   jq \
   parallel \
+  make \
   unzip -y && yum clean all
 
 WORKDIR /
