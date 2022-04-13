@@ -24,10 +24,9 @@ RUN \
     mitzasql \
     ranger-fm
 
-COPY entrypoint-dev.sh /
 COPY code-server-entrypoint.sh /
 COPY bash.sh /
-RUN chmod +x /entrypoint-dev.sh && \
+RUN \
     chmod +x /code-server-entrypoint.sh && \
     chmod +x /bash.sh
 
