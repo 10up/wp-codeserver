@@ -33,6 +33,7 @@ RUN chmod +x /entrypoint-dev.sh && \
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
+RUN chsh -s /bin/bash www-data
 USER www-data
 RUN \
   touch ~/.zshrc; \
