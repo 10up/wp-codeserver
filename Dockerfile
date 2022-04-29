@@ -3,6 +3,7 @@ FROM 10up/wp-php-fpm-dev:${PHP_VERSION}-ubuntu
 
 ARG PHP_VERSION=7.4
 
+
 USER root
 RUN apt-get update && \
   apt-get install -y \
@@ -40,4 +41,5 @@ RUN \
   touch ~/.parallel/will-cite
 WORKDIR /var/www/html
 
+SHELL ["/bin/bash", "-lc"]
 ENTRYPOINT ["/code-server-entrypoint.sh"]
