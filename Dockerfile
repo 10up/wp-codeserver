@@ -16,11 +16,11 @@ RUN apt-get update && \
   jq \
   parallel \
   build-essential && \
-  apt clean all
+  apt clean all && rm -rf /var/lib/apt/lists/*
 
 
 RUN \
-  pip3 install \
+  pip3 --no-cache-dir install \
     python-gitlab \
     mitzasql \
     ranger-fm
@@ -31,7 +31,9 @@ RUN \
     chmod +x /code-server-entrypoint.sh && \
     chmod +x /bash.sh
 
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN \
+  curl -fsSL https://code-server.dev/install.sh | sh; \
+  rm -rf ~/.cache
 
 RUN chsh -s /bin/bash www-data
 USER www-data
