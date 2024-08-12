@@ -1,7 +1,9 @@
 ARG PHP_VERSION=8.2
 
+# Set a BASE_IMAGE CI var to specify a different base image
 ARG BASE_IMAGE=ghcr.io/10up/wp-php-fpm-dev
-FROM ${BASE_IMAGE}:${PHP_VERSION}-ubuntu
+ARG UBUNTU_RELEASE_NAME=jammy
+FROM ${BASE_IMAGE}:${PHP_VERSION}-${UBUNTU_RELEASE_NAME}
 
 ARG PHP_VERSION=8.2
 
@@ -22,10 +24,18 @@ RUN apt-get update && \
 
 
 RUN \
-  pip3 --no-cache-dir install \
-    python-gitlab \
-    mitzasql \
-    ranger-fm
+  if [ $(grep VERSION_CODENAME /etc/os-release | cut -d '=' -f 2) = 'jammy' ]; then \
+    pip3 --no-cache-dir install \
+      python-gitlab \
+      mitzasql \
+      ranger-fm; \
+  else \
+    pip3 --no-cache-dir install --break-system-packages \
+      python-gitlab \
+      mitzasql \
+      ranger-fm; \
+  fi
+
 
 RUN \
   curl -fsSL https://code-server.dev/install.sh | sh; \
